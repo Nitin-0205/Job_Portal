@@ -23,6 +23,6 @@ export class ProjectsEntity {
     @Column("varchar", { name: "to", length: 50 })
     to: string; 
 
-    @ManyToOne(() => ApplicantEntity, (applicant) => applicant.applicantId)
+    @ManyToOne(() => ApplicantEntity, (applicant) => applicant.projects)
     applicant: ApplicantEntity;
 }

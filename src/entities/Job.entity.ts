@@ -2,6 +2,7 @@ import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import { ManyToMany, JoinTable } from "typeorm";
 // import { EmployerEntity } from "./Employer.entity";
 import { ApplicantEntity } from "./Applicant.entity";
+import { EmployerEntity } from "./Employer.entity";
 
 @Entity("Job")
 export class JobEntity {
@@ -29,10 +30,11 @@ export class JobEntity {
     @Column("varchar", { name: "type", length: 50 })
     type: string;
      
-    // @ManyToOne(() => EmployerEntity, (employer) => employer.employerId)
-    // employer: EmployerEntity;
+    @ManyToOne(() => EmployerEntity, (employer) => employer.createdjobs)
+    employer: EmployerEntity;
     
-    @ManyToOne(() => ApplicantEntity, (applicant) => applicant.applicantId)
+    @ManyToMany(() => ApplicantEntity, (applicant) => applicant.appliedJobs)
+    @JoinTable()
     applicant: ApplicantEntity;
 
 }

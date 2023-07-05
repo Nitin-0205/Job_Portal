@@ -12,24 +12,24 @@ export class WorkExperienceEntity extends BaseEntity {
     @Column("varchar", { name: "workExperienceId",unique:true, length: 50 }) //
     workExperienceId :string;
 
-    @Column("varchar", { name: "company", length: 50 })
+    @Column("varchar", { name: "company"})
     company: string;
 
-    @Column("varchar", { name: "location", length: 50 })
-    location: string;
+    @Column("varchar", { name: "location"})
+    position: string;
 
-    @Column("varchar", { name: "from", length: 50 })
+    @Column("varchar", { name: "from"})
     from: string;
 
-    @Column("varchar", { name: "to", length: 50 })
+    @Column("varchar", { name: "to"})
     to: string;
 
-    @Column("varchar", { name: "current", length: 50 })
+    @Column("varchar", { name: "current"})
     current: string;
 
-    @Column("varchar", { name: "description", length: 50 })
+    @Column("varchar", { name: "description"})
     description: string;
 
-    @ManyToOne(() => ApplicantEntity, (applicant) => applicant.applicantId)
+    @ManyToOne(() => ApplicantEntity, (applicant) => applicant.workExperiences)
     applicant: ApplicantEntity;
 }

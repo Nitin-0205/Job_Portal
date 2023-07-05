@@ -2,33 +2,36 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { JobService } from './job.service';
 import { CreateJobDto } from './dto/create-job.dto';
 import { UpdateJobDto } from './dto/update-job.dto';
+import { ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
+import { JobsFilterDto } from './dto/jobs-Filter.dto';
 
+@ApiTags("Job")
 @Controller('job')
 export class JobController {
   constructor(private readonly jobService: JobService) {}
 
-  @Post()
-  create(@Body() createJobDto: CreateJobDto) {
-    return this.jobService.create(createJobDto);
+  @Post("createJob/:employerId")
+  create(@Param("employerId")employerId:string,@Body() createJobDto: CreateJobDto) {
+    return this.jobService.create(createJobDto,employerId);
   }
 
-  @Get()
-  findAll() {
-    return this.jobService.findAll();
+  @Get("findAllJobsById/:Id")
+  findAllJobsById(@Param("Id")Id:string) {
+    return this.jobService.findAllJobsById(+Id);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.jobService.findOne(+id);
+  @Post('findAllJobs')
+  findAllJobs(@Body()jobsFilterDto:JobsFilterDto) {
+    return this.jobService.findJobs(jobsFilterDto);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateJobDto: UpdateJobDto) {
-    return this.jobService.update(+id, updateJobDto);
+  @Patch('updateJob/:jobId')
+  update(@Param('jobId') jobId: string, @Body() updateJobDto: UpdateJobDto) {
+    return this.jobService.update(jobId, updateJobDto);
   }
 
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.jobService.remove(+id);
-  }
+  // @Delete(':id')
+  // remove(@Param('id') id: string) {
+  //   return this.jobService.remove(+id);
+  // }
 }

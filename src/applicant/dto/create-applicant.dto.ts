@@ -1,7 +1,15 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsArray, IsNotEmpty, IsString } from "class-validator";
+import { IsArray, IsNotEmpty, IsOptional, IsString, IsUUID, ValidateNested } from "class-validator";
+import { WorkExpDto } from "./work-experience.dto";
+import { Type } from "class-transformer";
 
-export class CreateApplicantDto {
+export class CreateApplicantDto  {
+
+    @IsString()
+    @IsOptional()
+    @IsUUID()
+    applicantId: string;
+
     @IsString()
     @IsNotEmpty()
     @ApiProperty()
@@ -25,7 +33,17 @@ export class CreateApplicantDto {
     @ApiProperty()
     address: string;
 
-    @IsArray()
+    // @IsArray()
     @ApiProperty()
-    skills: [];
+    @IsOptional()   
+    skills: string[];
+
+    @IsString()
+    @IsOptional()   
+    file : string;
+
+    // @ApiProperty()
+    // @Type(() => WorkExpDto)
+    // @ValidateNested()
+    // workExperience: WorkExpDto
 }

@@ -6,31 +6,29 @@ export class EducationEntity extends BaseEntity {
     @PrimaryGeneratedColumn({ type: "int", name: "id" })
     id: number;
 
-    @Column("varchar", { name: "educationId",unique:true, length: 50 }) //
+    @Column("varchar", { name: "educationId",unique:true}) //
     educationId :string;
 
-    @Column("varchar", { name: "school", length: 50 })
+    @Column("varchar", { name: "school" })
     school: string;
 
-    @Column("varchar", { name: "degree", length: 50 })
+    @Column("varchar", { name: "degree"})
     degree: string;
 
-    @Column("varchar", { name: "fieldofstudy", length: 50 })
+    @Column("varchar", { name: "fieldofstudy" })
     fieldofstudy: string;
 
-    @Column("varchar", { name: "from", length: 50 })
+    @Column("varchar", { name: "from" })
     from: string;
 
-    @Column("varchar", { name: "to", length: 50 })
+    @Column("varchar", { name: "to"})
     to: string;
 
-    @Column("varchar", { name: "current", length: 50 })
+    @Column("varchar", { name: "current"})
     current: string;
 
-    @Column("varchar", { name: "description", length: 50 })
-    description: string;
 
-    @ManyToOne(() => ApplicantEntity, (applicant) => applicant.applicantId)
+    @ManyToOne(() => ApplicantEntity, (applicant) => applicant.educations)
     applicant: ApplicantEntity;
     
 }

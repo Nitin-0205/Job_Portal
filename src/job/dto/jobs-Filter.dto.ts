@@ -1,39 +1,41 @@
 import { ApiProperty } from "@nestjs/swagger";
-import { IsNotEmpty, IsNumber, IsOptional, IsString } from "class-validator";
+import { IsNumber, IsOptional, IsString } from "class-validator";
 
-export class CreateJobDto {
+export class JobsFilterDto{
+
     @IsString()
     @IsOptional()
     jobId :string;
 
     @IsString()
     @ApiProperty()
-    @IsNotEmpty()
+    @IsOptional()
+
     jobtitle: string;
 
     @IsString()
     @ApiProperty()
-    @IsNotEmpty()
+    @IsOptional()
     description: string;
 
     @IsNumber()
     @ApiProperty()
-    @IsNotEmpty()
+    @IsOptional()
     salary: number;
 
     @IsString()
     @ApiProperty()
-    @IsNotEmpty()
+    @IsOptional()
     location: string;
 
     @IsString()
     @ApiProperty()
-    @IsNotEmpty()
+    @IsOptional()
     company: string;
 
     @IsString()
     @ApiProperty()
-    @IsNotEmpty()
+    @IsOptional()
     type: string;
-     
+
 }

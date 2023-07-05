@@ -7,30 +7,27 @@ export class EmployerEntity extends BaseEntity{
     @PrimaryGeneratedColumn({ type: "int", name: "id" })
     id: number;
 
-    @Column("varchar", { name: "employerId",unique:true, length: 50 }) 
+    @Column("varchar", { name: "employerId",unique:true}) 
     employerId :string;
 
-    @Column("varchar", { name: "name", length: 50 })
+    @Column("varchar", { name: "name"})
     name: string;
 
-    @Column("varchar", { name: "companyName", length: 50 })
+    @Column("varchar", { name: "companyName"})
     email: string;
 
-    @Column("varchar", { name: "email", length: 50 })
+    @Column("varchar", { name: "email" })
     password: string;
 
-    @Column("varchar", { name: "role", length: 50 })
+    @Column("varchar", { name: "role" })
     phone: string;
 
     @Column("varchar", { name: "address" })
     address: string;
 
-    @Column("varchar", { name: "company", length: 50 })
+    @Column("varchar", { name: "company"})
     company: string;
 
-    @Column("varchar", { name: "type", length: 50 })
-    type: string;
-
-    @OneToMany(() => JobEntity, (job) => job.jobId)
+    @OneToMany(() => JobEntity, (job) => job.employer)
     createdjobs: JobEntity[];
 }

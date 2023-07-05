@@ -31,16 +31,19 @@ export class ApplicantEntity extends BaseEntity {
     @Column("varchar", { name: "address" })
     address: string;
 
-    @OneToMany(() => JobEntity, (job) => job.jobId)
-    jobs: JobEntity[];
+    @Column("varchar", { name: "file",nullable:true })
+    file: string;
 
-    @OneToMany(() => EducationEntity, (education) => education.educationId)
+    @ManyToMany(() => JobEntity, (job) => job.applicant)
+    appliedJobs: JobEntity[];
+
+    @OneToMany(() => EducationEntity, (education) => education.applicant)
     educations: EducationEntity[];
 
-    @OneToMany(() => ProjectsEntity, (project) => project.projectId)
+    @OneToMany(() => ProjectsEntity, (project) => project.applicant)
     projects: ProjectsEntity[];
 
-    @OneToMany(()=>WorkExperienceEntity, (workExperience) => workExperience.workExperienceId)
+    @OneToMany(()=>WorkExperienceEntity, (workExperience) => workExperience.applicant)
     workExperiences: WorkExperienceEntity[];
 
 }
