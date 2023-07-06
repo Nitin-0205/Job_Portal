@@ -15,7 +15,7 @@ export class WorkExperienceEntity extends BaseEntity {
     @Column("varchar", { name: "company"})
     company: string;
 
-    @Column("varchar", { name: "location"})
+    @Column("varchar", { name: "position"})
     position: string;
 
     @Column("varchar", { name: "from"})
@@ -29,6 +29,10 @@ export class WorkExperienceEntity extends BaseEntity {
 
     @Column("varchar", { name: "description"})
     description: string;
+
+    @Column("varchar", { name: "location"})
+    location: string;
+
 
     @ManyToOne(() => ApplicantEntity, (applicant) => applicant.workExperiences)
     applicant: ApplicantEntity;

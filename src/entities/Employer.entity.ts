@@ -13,13 +13,13 @@ export class EmployerEntity extends BaseEntity{
     @Column("varchar", { name: "name"})
     name: string;
 
-    @Column("varchar", { name: "companyName"})
+    @Column("varchar", { name: "email"})
     email: string;
 
-    @Column("varchar", { name: "email" })
+    @Column("varchar", { name: "password" })
     password: string;
 
-    @Column("varchar", { name: "role" })
+    @Column("varchar", { name: "phone" })
     phone: string;
 
     @Column("varchar", { name: "address" })

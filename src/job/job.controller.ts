@@ -1,11 +1,13 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { JobService } from './job.service';
 import { CreateJobDto } from './dto/create-job.dto';
 import { UpdateJobDto } from './dto/update-job.dto';
-import { ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger';
 import { JobsFilterDto } from './dto/jobs-Filter.dto';
-
+import { JwtGuard } from 'src/jwt/jwt.guard';
 @ApiTags("Job")
+@UseGuards(JwtGuard)
+@ApiBearerAuth()
 @Controller('job')
 export class JobController {
   constructor(private readonly jobService: JobService) {}
@@ -28,6 +30,12 @@ export class JobController {
   @Patch('updateJob/:jobId')
   update(@Param('jobId') jobId: string, @Body() updateJobDto: UpdateJobDto) {
     return this.jobService.update(jobId, updateJobDto);
+  }
+
+  @ApiTags("Job")
+  @Post("jobApply/:jobId/:applicantId")
+  jobApply(@Param("jobId")jobId:string,@Param("applicantId")applicantId:string){
+    return this.jobService.jobApply(jobId,applicantId)
   }
 
   // @Delete(':id')

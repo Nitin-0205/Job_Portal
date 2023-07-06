@@ -6,16 +6,11 @@ import { ApplicantEntity } from 'src/entities/Applicant.entity';
 import { WorkExperienceEntity } from 'src/entities/WorkExperience.entity';
 import { EducationEntity } from 'src/entities/Education.entity';
 import { JwtModule } from '@nestjs/jwt';
+import { JwtConfig } from 'src/config/jwt.config';
 
-export const key = "secret";
 @Module({
   imports: [TypeOrmModule.forFeature([ApplicantEntity, WorkExperienceEntity, EducationEntity]),
-  JwtModule.register({
-    secret:key,
-    signOptions: {
-      expiresIn: "1d"
-    }
-  })],
+  JwtModule.register(JwtConfig)],
   controllers: [ApplicantController],
   providers: [ApplicantService]
 })

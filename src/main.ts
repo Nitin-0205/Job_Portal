@@ -11,6 +11,7 @@ async function bootstrap() {
     .setDescription('Job Portal API description ')
     .setVersion('1.0')
     .addTag('Job Portal')
+    .addBearerAuth()
     .build();
 
     const document = SwaggerModule.createDocument(app,swaggerOption);
@@ -19,6 +20,7 @@ async function bootstrap() {
     app.useGlobalPipes(new ValidationPipe({
       whitelist:true
     }))
+
   await app.listen(3000);
 }
 bootstrap();

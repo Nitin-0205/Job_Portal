@@ -35,6 +35,6 @@ export class JobEntity {
     
     @ManyToMany(() => ApplicantEntity, (applicant) => applicant.appliedJobs)
     @JoinTable()
-    applicant: ApplicantEntity;
+    applicant: ApplicantEntity[];
 
 }

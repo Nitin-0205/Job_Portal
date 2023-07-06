@@ -1,7 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsArray, IsNotEmpty, IsOptional, IsString, IsUUID, ValidateNested } from "class-validator";
-import { WorkExpDto } from "./work-experience.dto";
-import { Type } from "class-transformer";
 
 export class CreateApplicantDto  {
 
