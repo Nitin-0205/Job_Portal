@@ -3,7 +3,6 @@ import { EmployeerService } from './employeer.service';
 import { CreateEmployeerDto } from './dto/create-employeer.dto';
 import { UpdateEmployeerDto } from './dto/update-employeer.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { LoginEmployeerDto } from './dto/login-employer.dto';
 // import { ConfigService } from '@nestjs/config';
 
 @Controller('employeer')
@@ -12,18 +11,18 @@ export class EmployeerController {
     // private configService: ConfigService,
     ) {}
 
-  @ApiTags("Emplyeer Signup/Login")
-  @Post("signup")
-  create(@Body() createEmployeerDto: CreateEmployeerDto) {
-    console.log(process.env.JWT_SECRET)
-    // return this.configService.get("JWT_SECRET")
-    // return this.employeerService.create(createEmployeerDto);
-  }
-  @ApiTags("Emplyeer Signup/Login")
-  @Post("login")
-  login(@Body() loginEmployeerDto : LoginEmployeerDto) {
-    return this.employeerService.employeerLogin(loginEmployeerDto);
-  }
+  // @ApiTags("Emplyeer Signup/Login")
+  // @Post("signup")
+  // create(@Body() createEmployeerDto: CreateEmployeerDto) {
+  //   console.log(process.env.JWT_SECRET)
+  //   return this.configService.get("JWT_SECRET")
+  //   return this.employeerService.create(createEmployeerDto);
+  // }
+  // @ApiTags("Emplyeer Signup/Login")
+  // @Post("login")
+  // login(@Body() loginEmployeerDto : LoginEmployeerDto) {
+  //   return this.employeerService.employeerLogin(loginEmployeerDto);
+  // }
 
   @ApiTags("Emplyeer Profile")
   @Get("getEmployeerProfile:employerId")

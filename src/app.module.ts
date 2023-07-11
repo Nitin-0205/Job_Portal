@@ -9,16 +9,14 @@ import { JobModule } from './job/job.module';
 import { ConfigModule } from '@nestjs/config';
 import { WorkExperienceModule } from './work-experience/work-experience.module';
 import { EducationModule } from './education/education.module';
+import { UserModule } from './user/user.module';
+import { ProjectsModule } from './projects/projects.module';
 
-export const key = "sigma_007_secret";
 @Module({
-  imports: [ ConfigModule.forRoot({
-    isGlobal:true,
-    envFilePath:'.env'
-  }),
-  TypeOrmModule.forRoot(dataSourceOption), 
-    EmployeerModule, ApplicantModule, JobModule, WorkExperienceModule, EducationModule,
- ],
+  imports: [ConfigModule.forRoot(),
+  TypeOrmModule.forRoot(dataSourceOption),
+    EmployeerModule, ApplicantModule, JobModule, WorkExperienceModule, EducationModule, UserModule, ProjectsModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

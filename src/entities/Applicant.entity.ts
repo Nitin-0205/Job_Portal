@@ -4,6 +4,7 @@ import { EducationEntity } from "./Education.entity";
 import { BaseEntity } from "./Base.entity";
 import { ProjectsEntity } from "./Projects.entity";
 import { WorkExperienceEntity } from "./WorkExperience.entity";
+import { Exclude } from "class-transformer";
 
 @Entity("Applicant")
 export class ApplicantEntity extends BaseEntity {
@@ -13,23 +14,24 @@ export class ApplicantEntity extends BaseEntity {
     @Column("varchar", { name: "applicantId",unique:true}) 
     applicantId :string;
 
-    @Column("varchar", { name: "name"})
-    name: string;
+    // @Column("varchar", { name: "name"})
+    // name: string;
 
-    @Column("varchar", { name: "email"})
-    email: string;
+    // @Column("varchar", { name: "email"})
+    // email: string;
 
-    @Column("varchar", { name: "password" })
-    password: string;
+    // @Exclude()
+    // @Column("varchar", { name: "password" })
+    // password: string;
 
-    @Column("varchar",{array:true ,name: "skills"})
+    @Column("varchar",{array:true ,name: "skills",nullable:true})
     skills: string[];
 
-    @Column("varchar", { name: "phone" })
-    phone: string;
+    // @Column("varchar", { name: "phone" })
+    // phone: string;
 
-    @Column("varchar", { name: "address" })
-    address: string;
+    // @Column("varchar", { name: "address" })
+    // address: string;
 
     @Column("varchar", { name: "file",nullable:true })
     file: string;
@@ -45,5 +47,7 @@ export class ApplicantEntity extends BaseEntity {
 
     @OneToMany(()=>WorkExperienceEntity, (workExperience) => workExperience.applicant)
     workExperiences: WorkExperienceEntity[];
+
+    
 
 }

@@ -21,6 +21,7 @@ async function bootstrap() {
       whitelist:true
     }))
 
+  app.enableCors();
   await app.listen(3000);
 }
 bootstrap();

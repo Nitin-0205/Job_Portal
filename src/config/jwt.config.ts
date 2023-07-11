@@ -1,6 +1,8 @@
 import { JwtModuleOptions } from "@nestjs/jwt";
 
-const key = "sigma_007_secret"
+export const key = "sigma_007_employer"
+export const applicant_Jwt_Key = "sigma_007_applicant"
+
 export const JwtConfig: JwtModuleOptions = {
     secret: key,
     signOptions: {

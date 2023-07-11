@@ -8,29 +8,6 @@ export class CreateApplicantDto  {
     @IsUUID()
     applicantId: string;
 
-    @IsString()
-    @IsNotEmpty()
-    @ApiProperty()
-    name: string;
-
-    @IsString() 
-    @IsNotEmpty()
-    @ApiProperty()
-    email: string;
-
-    @IsString()
-    @IsNotEmpty()
-    @ApiProperty()
-    password: string;
-
-    @IsString()
-    @ApiProperty()
-    phone: string;
-
-    @IsString()
-    @ApiProperty()
-    address: string;
-
     // @IsArray()
     @ApiProperty()
     @IsOptional()   
@@ -39,6 +16,29 @@ export class CreateApplicantDto  {
     @IsString()
     @IsOptional()   
     file : string;
+
+    // @IsString()
+    // @IsNotEmpty()
+    // @ApiProperty()
+    // name: string;
+
+    // @IsString() 
+    // @IsNotEmpty()
+    // @ApiProperty()
+    // email: string;
+
+    // @IsString()
+    // @IsNotEmpty()
+    // @ApiProperty()
+    // password: string;
+
+    // @IsString()
+    // @ApiProperty()
+    // phone: string;
+
+    // @IsString()
+    // @ApiProperty()
+    // address: string;
 
     // @ApiProperty()
     // @Type(() => WorkExpDto)

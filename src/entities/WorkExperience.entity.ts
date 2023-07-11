@@ -33,7 +33,6 @@ export class WorkExperienceEntity extends BaseEntity {
     @Column("varchar", { name: "location"})
     location: string;
 
-
     @ManyToOne(() => ApplicantEntity, (applicant) => applicant.workExperiences)
     applicant: ApplicantEntity;
 }

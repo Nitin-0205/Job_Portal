@@ -5,22 +5,22 @@ export class ProjectsEntity {
     @PrimaryGeneratedColumn({ type: "int", name: "id" })   
     id: number;
 
-    @Column("varchar", { name: "projectId",unique:true, length: 50 }) //
+    @Column("varchar", { name: "projectId",unique:true}) //
     projectId :string;
 
-    @Column("varchar", { name: "title", length: 50 })
+    @Column("varchar", { name: "title" })
     title: string;
 
-    @Column("varchar", { name: "description", length: 50 })
+    @Column("varchar", { name: "description" })
     description: string;
 
-    @Column("varchar", { name: "link", length: 50 })
+    @Column("varchar", { name: "link"})
     link: string;
 
-    @Column("varchar", { name: "from", length: 50 })
+    @Column("varchar", { name: "from" })
     from: string;
 
-    @Column("varchar", { name: "to", length: 50 })
+    @Column("varchar", { name: "to"})
     to: string; 
 
     @ManyToOne(() => ApplicantEntity, (applicant) => applicant.projects)

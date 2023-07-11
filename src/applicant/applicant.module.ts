@@ -7,11 +7,15 @@ import { WorkExperienceEntity } from 'src/entities/WorkExperience.entity';
 import { EducationEntity } from 'src/entities/Education.entity';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtConfig } from 'src/config/jwt.config';
+import { ConfigModule } from '@nestjs/config';
+import { UserEntity } from 'src/entities/User.entity';
+import { ProjectsEntity } from 'src/entities/Projects.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([ApplicantEntity, WorkExperienceEntity, EducationEntity]),
+  imports: [ConfigModule , TypeOrmModule.forFeature([UserEntity,ApplicantEntity, WorkExperienceEntity, EducationEntity,ProjectsEntity]),
   JwtModule.register(JwtConfig)],
   controllers: [ApplicantController],
-  providers: [ApplicantService]
+  providers: [ApplicantService],
+  exports:[ApplicantService]
 })
-export class ApplicantModule { }
+export class ApplicantModule {}

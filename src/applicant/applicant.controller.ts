@@ -1,21 +1,28 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseInterceptors, UploadedFile, UseGuards } from '@nestjs/common';
 import { ApplicantService } from './applicant.service';
 import { CreateApplicantDto } from './dto/create-applicant.dto';
 import { UpdateApplicantDto } from './dto/update-applicant.dto';
-import { LoginApplicantDto } from './dto/login-applicant.dto';
 import { ApiBody, ApiConsumes, ApiTags } from '@nestjs/swagger';
 import { EducationDto } from '../education/dto/education-applicant.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { v4 as uuidv4 } from 'uuid';
 import { diskStorage } from 'multer';
+import { ProfileApplicantDto } from './dto/profile-applicant.dto';
+// import { JwtApplicantGuard } from "src/jwt/applicantjwt.guard"
 
+@ApiTags("Applicant Profile")
+// @UseGuards(JwtApplicantGuard)
 @Controller('applicant')
 export class ApplicantController {
   constructor(private readonly applicantService: ApplicantService
   ) { }
 
-  @ApiTags("Applicant Signup/Login")
-  @Post("signup")
+  @Get("getApplicantProfile/:applicantId")
+  profile(@Param("applicantId") applicantId: string) {
+    return this.applicantService.getApplicantProfile(applicantId);
+  }
+
+  @Patch("profile/:applicantId")
   @ApiConsumes('multipart/form-data')
   @ApiBody({
     schema: {
@@ -25,28 +32,52 @@ export class ApplicantController {
           type: "string",
           format: "binary",
         },
-        name: {
-          type: "string"
+        applicant: {
+          type: "object",
+          properties: {
+
+            skills: {
+              type: "array",
+              items: {
+                type: "string"
+              }
+            }
+          }
         },
-        email: {
-          type: "string",
+        education: {
+          type: "object",
+          properties: {
+            school: { type: "string" },
+            degree: { type: "string" },
+            fieldofstudy: { type: "string" },
+            from: { type: "string" },
+            to: { type: "string" },
+            current: { type: "string" }
+          }
         },
-        password: {
-          type: "string",
+        workExperience: {
+          type: "object",
+          properties: {
+            company: { type: "string" },
+            location: { type: "string" },
+            position: { type: "string" },
+            from: { type: "string" },
+            to: { type: "string" },
+            current: { type: "string" },
+            description: { type: "string" }
+          }
         },
-        phone: {
-          type: "string",
-        },
-        address: {
-          type: "string"
-        },
-        skills: {
-          type: "array",
-          items: {
-            type: "string"
+        projects: {
+          type: "object",
+          properties: {
+            title: { type: "string" },
+            description: { type: "string" },
+            link: { type: "string" },
+            from: { type: "string" },
+            to: { type: "string" },
           }
         }
-      },
+      }
     },
   })
 
@@ -61,19 +92,22 @@ export class ApplicantController {
     })
   }))
   create(
+    @Param("applicantId") applicantId: string,
     @UploadedFile("file") file: Express.Multer.File,
-    @Body() createApplicantDto: CreateApplicantDto) {
-    createApplicantDto.skills = createApplicantDto.skills.toString().split(",");
-    console.log("file", file,createApplicantDto);
+    @Body() profileApplicantDto: ProfileApplicantDto) {
 
-    return this.applicantService.create(createApplicantDto, file);
+    profileApplicantDto.applicant.skills = profileApplicantDto?.applicant?.skills?.toString().split(",");
+    console.log("file", profileApplicantDto, file);
+
+    return this.applicantService.update(applicantId, profileApplicantDto, file);
   }
 
-  @ApiTags("Applicant Signup/Login")
-  @Post("login")
-  Login(@Body() loginApplicantDto: LoginApplicantDto) {
-    return this.applicantService.applicantLogin(loginApplicantDto);
-  }
+  // @ApiTags("Applicant Signup/Login")
+  // @Post("login")
+  //  Login(@Body() loginApplicantDto: LoginApplicantDto) {
+  //   console.log("loginApplicantDto", loginApplicantDto)
+  //   return   this.applicantService.applicantLogin(loginApplicantDto);
+  // }
 
 }
 
