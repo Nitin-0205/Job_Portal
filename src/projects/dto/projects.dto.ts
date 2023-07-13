@@ -1,8 +1,10 @@
+import { Injectable } from "@nestjs/common";
 import { ApiProperty } from "@nestjs/swagger";
 import { IsOptional, IsString } from "class-validator";
 import { PrimaryGeneratedColumn } from "typeorm";
 
 
+@Injectable()
 export class ProjectDto {
     @PrimaryGeneratedColumn()
     id: number;

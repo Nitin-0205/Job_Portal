@@ -7,7 +7,7 @@ export const dataSourceOption :DataSourceOptions =  {
     username: "postgres",
     password: "1234",
     database:"jobseeker",
-    logging: true,
+    // logging: true,
     entities: ["dist/**/*.entity{.ts,.js}"],
     migrations: ["dist/migrations/*.js"],
     migrationsTableName: "JobseekerMigrations",

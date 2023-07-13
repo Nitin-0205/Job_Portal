@@ -17,18 +17,18 @@ export class ProfileApplicantDto{
     @ApiProperty()
     @IsOptional()
     @Type(() => EducationDto)
-    @ValidateNested()
-    education: EducationDto;
+    @ValidateNested({each: true})
+    education: EducationDto[];
 
     @ApiProperty()
     @IsOptional()
     @Type(() => WorkExpDto)
-    @ValidateNested()
-    workExperience: WorkExpDto;
+    @ValidateNested({each: true})
+    workExperience: WorkExpDto[];
 
     @ApiProperty()
     @IsOptional()
     @Type(() => ProjectDto)
-    @ValidateNested()
-    projects: ProjectDto;
+    @ValidateNested({each: true})
+    projects: ProjectDto[];
 }

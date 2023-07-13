@@ -11,6 +11,7 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { LoginUserDto } from './dto/login-user.dto';
 import { ApplicantEntity } from 'src/entities/Applicant.entity';
+import { ConfigService } from '@nestjs/config';
 
 
 @Injectable()

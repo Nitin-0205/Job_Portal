@@ -2,10 +2,12 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } f
 import { WorkExperienceService } from './work-experience.service';
 import { ApiTags } from '@nestjs/swagger';
 import { WorkExpDto } from './dto/work-experience.dto';
+import { JwtGuard } from 'src/jwt/jwt.guard';
 // import { JwtApplicantGuard } from "src/jwt/applicantjwt.guard"
 
 // @UseGuards(JwtApplicantGuard)
 @ApiTags("Work Experience")
+@UseGuards(JwtGuard)
 @Controller('applicant')
 export class WorkExperienceController {
   constructor(private readonly workExperienceService: WorkExperienceService) {}

@@ -1,10 +1,11 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UsePipes, ValidationPipe ,UseInterceptors, ClassSerializerInterceptor} from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { LoginUserDto } from './dto/login-user.dto';
 import { RolePipe } from 'src/pipe/customRole.pipe';
+import { UserEntity } from 'src/entities/User.entity';
 
 @ApiTags("User")
 @Controller('user')
@@ -18,10 +19,13 @@ export class UserController {
   }
 
   @Post("login")
+  @UseInterceptors(ClassSerializerInterceptor)
+
   @UsePipes(new RolePipe())
-  login(@Body()loginUserDto : LoginUserDto): Promise<{ msg: string; userId: string; token: string; }> {
+  login(@Body()loginUserDto : LoginUserDto){
     console.log("loginUserDto",loginUserDto);
     return this.userService.userLogin(loginUserDto);
+
   }
   
   // @Get()

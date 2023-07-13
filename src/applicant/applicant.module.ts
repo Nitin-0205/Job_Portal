@@ -10,10 +10,12 @@ import { JwtConfig } from 'src/config/jwt.config';
 import { ConfigModule } from '@nestjs/config';
 import { UserEntity } from 'src/entities/User.entity';
 import { ProjectsEntity } from 'src/entities/Projects.entity';
-
+import { AwsModule } from 'src/S3_AWS_Services/aws.module';
 @Module({
   imports: [ConfigModule , TypeOrmModule.forFeature([UserEntity,ApplicantEntity, WorkExperienceEntity, EducationEntity,ProjectsEntity]),
-  JwtModule.register(JwtConfig)],
+  JwtModule.register(JwtConfig),
+  AwsModule,
+],
   controllers: [ApplicantController],
   providers: [ApplicantService],
   exports:[ApplicantService]

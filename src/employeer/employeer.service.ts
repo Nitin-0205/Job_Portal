@@ -13,7 +13,7 @@ export class EmployeerService {
   constructor(
     @InjectRepository(EmployerEntity) private employeerRepo:Repository<EmployerEntity>,
     @InjectRepository(UserEntity) private userRepo:Repository<UserEntity>,
-    private jwtService:JwtService
+    private jwtService:JwtService,
   ) {}
   
   // async create(createEmployeerDto: CreateEmployeerDto) {

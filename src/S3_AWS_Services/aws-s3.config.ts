@@ -2,9 +2,8 @@ import { Injectable } from "@nestjs/common";
 import * as AWS from 'aws-sdk'
 @Injectable()
 export class AwsS3Service {
-    constructor() { }
+    constructor() {}
 
-    AWS_S3_BUCKET_NAME: 'jobportfoliobucket';
     s3 = new AWS.S3({
         accessKeyId: process.env.AWS_ACCESS_KEY_ID,
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
@@ -17,7 +16,7 @@ export class AwsS3Service {
         return await this.s3_upload(
             buffer,
             originalname,
-            this.AWS_S3_BUCKET_NAME,
+            process.env.AWS_S3_BUCKET_NAME,
             file.mimetype
         )
 

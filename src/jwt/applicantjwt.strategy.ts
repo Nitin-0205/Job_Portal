@@ -1,6 +1,6 @@
 import { PassportStrategy } from "@nestjs/passport";
 import { Strategy,ExtractJwt } from "passport-jwt";
-import { key ,applicant_Jwt_Key} from "src/config/jwt.config";
+import * as dotenv from "dotenv"
 
 export class JwtApplicantStategy extends PassportStrategy(Strategy,"applicantjwt"){
     constructor(
@@ -9,7 +9,7 @@ export class JwtApplicantStategy extends PassportStrategy(Strategy,"applicantjwt
         super({
             jwtFromRequest:ExtractJwt.fromAuthHeaderAsBearerToken(),
             ignoreExpiration:false,
-            secretOrKey:applicant_Jwt_Key
+            secretOrKey:dotenv.config().parsed.JWT_SECRET
         })
     }
 

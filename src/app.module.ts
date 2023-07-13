@@ -13,7 +13,9 @@ import { UserModule } from './user/user.module';
 import { ProjectsModule } from './projects/projects.module';
 
 @Module({
-  imports: [ConfigModule.forRoot(),
+  imports: [
+    ConfigModule.forRoot(),
+
   TypeOrmModule.forRoot(dataSourceOption),
     EmployeerModule, ApplicantModule, JobModule, WorkExperienceModule, EducationModule, UserModule, ProjectsModule,
   ],
