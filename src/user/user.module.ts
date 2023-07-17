@@ -9,13 +9,16 @@ import { UserEntity } from 'src/entities/User.entity';
 import { EmployeerModule } from 'src/employeer/employeer.module';
 import { CreateEmployeerDto } from 'src/employeer/dto/create-employeer.dto';
 import { ApplicantEntity } from 'src/entities/Applicant.entity';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule,
   EmployeerModule,
   TypeOrmModule.forFeature([EmployerEntity,UserEntity,ApplicantEntity]),
   JwtModule.register(JwtConfig)],
   controllers: [UserController],
-  providers: [UserService]
+  providers: [UserService],
+  exports:[UserService]
 })
 export class UserModule {}

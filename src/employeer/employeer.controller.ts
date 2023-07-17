@@ -1,11 +1,14 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from '@nestjs/common';
 import { EmployeerService } from './employeer.service';
 import { CreateEmployeerDto } from './dto/create-employeer.dto';
 import { UpdateEmployeerDto } from './dto/update-employeer.dto';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { JwtGuard } from 'src/jwt/guards/jwt.guard'
 // import { ConfigService } from '@nestjs/config';
 
 @Controller('employeer')
+@ApiBearerAuth()
+@UseGuards(JwtGuard)
 export class EmployeerController {
   constructor(private readonly employeerService: EmployeerService,
     // private configService: ConfigService,

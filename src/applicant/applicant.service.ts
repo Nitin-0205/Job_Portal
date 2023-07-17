@@ -15,6 +15,9 @@ import { UserEntity } from 'src/entities/User.entity';
 import { ProfileApplicantDto } from './dto/profile-applicant.dto';
 import { ProjectDto } from 'src/projects/dto/projects.dto';
 import { ProjectsEntity } from 'src/entities/Projects.entity';
+import { AwsS3Service } from 'src/S3_AWS_Services/aws-s3.config';
+import { createReadStream } from 'fs';
+import { join } from 'path';
 
 @Injectable()
 export class ApplicantService {
@@ -25,7 +28,9 @@ export class ApplicantService {
     @InjectRepository(EducationEntity) private educationRepo: Repository<EducationEntity>,
     @InjectRepository(UserEntity) private userRepo: Repository<UserEntity>,
     @InjectRepository(ProjectsEntity) private projectRepo: Repository<ProjectsEntity>,
-    private jwtService: JwtService
+    private jwtService: JwtService,
+    private readonly awsService: AwsS3Service
+
   ) { }
 
 
@@ -44,7 +49,11 @@ export class ApplicantService {
     if (!education) {
       throw new HttpException("Education Not Found !!!", HttpStatus.NOT_FOUND);
     }
-    return { ...user, ...userprof, workExp, education };
+    const projects = await this.projectRepo.find({ where: { applicant: { applicantId } } });
+    if (!projects) {
+      throw new HttpException("Projects Not Found !!!", HttpStatus.NOT_FOUND);
+    }
+    return { ...user, ...userprof, workExp, education ,projects};
   }
 
   async update(applicantId: string, profileApplicantDto: ProfileApplicantDto) {
@@ -100,6 +109,8 @@ export class ApplicantService {
       throw new HttpException("User Not Found !!!", HttpStatus.NOT_FOUND);
     }
 
+    const upload =  await this.awsService.uploadFile(file);
+
     const uploaded = await this.applicantRepo.update({ applicantId: applicantId }, { file: file.originalname });
     if (!uploaded) {
 
@@ -108,6 +119,31 @@ export class ApplicantService {
     return { msg: "Resume Uploaded Successfully !!!" };
 
   }
+
+  async getuploadedResume(applicantId: string):Promise<StreamableFile> {
+    const user = await this.userRepo.findOne({ where: { userId: applicantId } });
+    if (!user) {
+      throw new HttpException("User Not Found !!!", HttpStatus.NOT_FOUND);
+    }
+    const resume = await this.applicantRepo.findOne({ where: { applicantId: applicantId } });
+    if (!resume) {
+      throw new HttpException("Resume Not Found !!!", HttpStatus.NOT_FOUND);
+    }
+    // const file = await this.awsService.getUploadedFile(resume.file);
+    // console.log(file)
+
+    try{
+  // console.log("./uploads/" + pdfFileName)
+  const file = createReadStream(join(__dirname, "..", "..","files" , "13af5d96-51df-4319-9bdb-b0dd01a269f6.jpeg-optimizer_HeaderBanner.jpg"));
+  console.log(file)
+  return new StreamableFile(file);
+  }catch(e){
+      throw new HttpException({message:"Book Not Found"},HttpStatus.NOT_FOUND)
+  }
+
+  }
+
+
 
 
 }

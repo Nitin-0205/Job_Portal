@@ -20,7 +20,9 @@ export class UserService {
     @InjectRepository(UserEntity) private userRepo:Repository<UserEntity>,
     @InjectRepository(EmployerEntity) private employerRepo:Repository<EmployerEntity>,
     @InjectRepository(ApplicantEntity) private applicantRepo:Repository<ApplicantEntity>,
-    private jwtService:JwtService)
+    private jwtService:JwtService,
+    private configService:ConfigService
+    )
   {}
   async create(createUserDto: CreateUserDto) {
 
@@ -58,26 +60,34 @@ export class UserService {
     if(!isMatch){
       throw new HttpException("Invalid Credentials !!!",HttpStatus.BAD_REQUEST);
     }
-    const payload = {email:loginUserDto.email,userId:user.userId}
-    const token = await this.jwtService.sign(payload);
+    const payload = {email:loginUserDto.email,userId:user.userId,role:user.role}
+    const token = await this.jwtService.sign(payload,{secret:user.role === "applicant" ? this.configService.get("JWT_ApplicantSECRET") : this.configService.get("JWT_SECRET")});
     return {msg:"User Login Successfull !!!",userId:user.userId,token:token};
   }
 
-  findAll() {
-    return `This action returns all user`;
+  async validate(userId ,role){
+    const user = await this.userRepo.findOne({where:{userId,role}});
+    if(!user){
+      throw new HttpException("Invalid Access to provided Token !!!",HttpStatus.UNAUTHORIZED);
+    }
+    return user;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
-  }
+  // findAll() {
+  //   return `This action returns all user`;
+  // }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
+  // findOne(id: number) {
+  //   return `This action returns a #${id} user`;
+  // }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
-  }
+  // update(id: number, updateUserDto: UpdateUserDto) {
+  //   return `This action updates a #${id} user`;
+  // }
+
+  // remove(id: number) {
+  //   return `This action removes a #${id} user`;
+  // }
 }
 
 

@@ -1,11 +1,12 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { EducationService } from './education.service';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { EducationDto } from './dto/education-applicant.dto';
 import { UpdateEducationDto } from './dto/update-education.dto';
-// import { JwtApplicantGuard } from "src/jwt/applicantjwt.guard"
+import { JwtApplicantGuard } from "src/jwt/guards/applicantjwt.guard"
 
-// @UseGuards(JwtApplicantGuard)
+@UseGuards(JwtApplicantGuard)
+@ApiBearerAuth()
 @Controller('education')
 export class EducationController {
   constructor(private readonly educationService: EducationService) {}

@@ -1,17 +1,17 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common';
 import { WorkExperienceService } from './work-experience.service';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { WorkExpDto } from './dto/work-experience.dto';
-import { JwtGuard } from 'src/jwt/jwt.guard';
-// import { JwtApplicantGuard } from "src/jwt/applicantjwt.guard"
+import { JwtApplicantGuard } from 'src/jwt/guards/applicantjwt.guard';
 
-// @UseGuards(JwtApplicantGuard)
 @ApiTags("Work Experience")
-@UseGuards(JwtGuard)
+@ApiBearerAuth()
+@UseGuards(JwtApplicantGuard)
 @Controller('applicant')
 export class WorkExperienceController {
   constructor(private readonly workExperienceService: WorkExperienceService) {}
     
+
   @Post("addworkexperience/:applicantId")
   addWorkExperience(@Param("applicantId") applicantId: string, @Body() workExpDto: WorkExpDto) {
     return this.workExperienceService.addWorkExperience(workExpDto, applicantId);
@@ -36,3 +36,4 @@ export class WorkExperienceController {
   
   
 }
+

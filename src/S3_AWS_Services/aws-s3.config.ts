@@ -40,4 +40,32 @@ export class AwsS3Service {
             console.log(e);
         }
     }
+
+    async getUploadedFile(fileKey: string){
+        const params = {
+            Bucket: process.env.AWS_S3_BUCKET_NAME,
+            Key: fileKey,
+        }
+        try {
+            let s3Response = await this.s3.getObject(params).promise();
+            return s3Response;
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    async deleteFile(fileKey: string) {
+        const params = {
+            Bucket: process.env.AWS_S3_BUCKET_NAME,
+            Key: fileKey,
+        }
+        try {
+            let s3Response = await this.s3.deleteObject(params).promise();
+            return s3Response;
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+
 }

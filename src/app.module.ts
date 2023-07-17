@@ -14,7 +14,8 @@ import { ProjectsModule } from './projects/projects.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot(),
+    ConfigModule.forRoot(
+    ),
 
   TypeOrmModule.forRoot(dataSourceOption),
     EmployeerModule, ApplicantModule, JobModule, WorkExperienceModule, EducationModule, UserModule, ProjectsModule,

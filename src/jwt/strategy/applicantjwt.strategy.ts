@@ -1,24 +1,22 @@
+import { HttpException, HttpStatus } from "@nestjs/common";
 import { PassportStrategy } from "@nestjs/passport";
 import { Strategy,ExtractJwt } from "passport-jwt";
 
-import * as dotenv from "dotenv"
-export class JwtStategy extends PassportStrategy(Strategy,'jwt'){
+export class JwtApplicantStategy extends PassportStrategy(Strategy,'applicantjwt'){
     constructor(
-
     ){
         super({
             jwtFromRequest:ExtractJwt.fromAuthHeaderAsBearerToken(),
             ignoreExpiration:false,
-            secretOrKey:dotenv.config().parsed.JWT_SECRET
+            secretOrKey:process.env.JWT_ApplicantSECRET
         })
     }
 
     async validate(payload:any){
-        // const employer  = await this.employerRepo.findOne({where:{employerId:payload.employerId}})
-        // if(!employer){
-        //     return false
-        // }
         console.log(payload)
+        if(!payload){
+            throw new HttpException("Invalid Token Access to this Applicant Service",HttpStatus.UNAUTHORIZED)
+        }
         return true
     }
 

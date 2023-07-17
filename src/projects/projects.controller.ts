@@ -1,10 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { ProjectsService } from './projects.service';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { ProjectDto } from './dto/projects.dto';
 import { UpdateProjectDto } from './dto/update-project.dto';
+import { JwtApplicantGuard } from 'src/jwt/guards/applicantjwt.guard';
 
 @Controller('projects')
+@ApiBearerAuth()
+@UseGuards(JwtApplicantGuard)
 export class ProjectsController {
   constructor(private readonly projectsService: ProjectsService) {}
 

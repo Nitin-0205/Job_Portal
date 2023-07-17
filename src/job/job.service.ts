@@ -46,25 +46,45 @@ export class JobService {
     return Jobs;
   }
 
-  async viewjobApplicant(jobid:string) {
-    const job = await this.jobRepo.findOne({relations:["applicant"],where:{jobId:jobid}})
+  async viewjobApplicant(emplId :string,jobid:string) {
+    
+    const employer = await this.employerRepo.findOne({where:{employerId:emplId}})
+    if(!employer){
+      throw new HttpException("No Access !!!",HttpStatus.FORBIDDEN)
+    }
+    const job = await this.jobRepo.findOne({relations:["applicant"],where:{jobId:jobid,employer:{employerId:employer.employerId}}})
     if(!job){
-      throw new HttpException(" No Job with This JobId Yet!!!",HttpStatus.NOT_FOUND)
-      
+      throw new HttpException(" No Job with This JobId!!!",HttpStatus.NOT_FOUND)
     }
     if(job.applicant.length == 0){
       throw new HttpException(" No Applicant for This Job Yet!!!",HttpStatus.NOT_FOUND)
     }
-    const applicant = job.applicant.map(async  (app)=>{
-      // const details = await this.userRepo.findOne({where:{userId:app.applicantId}})
-
-      const detail =await this.applicantService.getApplicantProfile(app.applicantId)
-      console.log("app",app)
-
-      return detail
+    const res = job.applicant.map((app)=>{
+      return {applicantId:app.applicantId}
     })
-    return applicant;
+
+    return res
   }
+
+  async viewjobApplicantProfile(jobid:string,applId:string) {
+
+    const job = await this.jobRepo.findOne({relations:["applicant"],where:{jobId:jobid}})
+    if(!job){
+      throw new HttpException(" No Job with This JobId Yet!!!",HttpStatus.NOT_FOUND)
+    }
+    if(job.applicant.length == 0){
+      throw new HttpException(" No Applicant for This Job Yet!!!",HttpStatus.NOT_FOUND)
+    }
+    const check = job.applicant.find((app)=>{
+      return app.applicantId == applId
+    })
+    if(!check){
+      throw new HttpException(" No Applicant for This Job Yet!!!",HttpStatus.NOT_FOUND)
+    }
+    const applicant = await this.applicantService.getApplicantProfile(applId)
+    return applicant
+  }
+  
 
 
   async findJobsById(jobid:string) {
