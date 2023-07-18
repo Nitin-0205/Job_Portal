@@ -1,40 +1,46 @@
 import { ApiProperty } from "@nestjs/swagger";
 import { IsNumber, IsOptional, IsString } from "class-validator";
+import { IsNull } from "typeorm";
 
 export class JobsFilterDto{
 
-    @IsString()
     @IsOptional()
+    @ApiProperty({required:false})
+    limit :number;
+
+    @IsOptional()
+    @ApiProperty({required:false})
+    offset :number;
+
+    @IsOptional()
+    @ApiProperty({required:false})
     jobId :string;
 
-    @IsString()
-    @ApiProperty()
+    @ApiProperty({required:false})
     @IsOptional()
-
     jobtitle: string;
 
     @IsString()
-    @ApiProperty()
+    @ApiProperty({required:false})
     @IsOptional()
     description: string;
 
-    @IsNumber()
-    @ApiProperty()
+    @ApiProperty({required:false})
     @IsOptional()
     salary: number;
 
     @IsString()
-    @ApiProperty()
+    @ApiProperty({required:false})
     @IsOptional()
     location: string;
 
     @IsString()
-    @ApiProperty()
+    @ApiProperty({required:false})
     @IsOptional()
     company: string;
 
     @IsString()
-    @ApiProperty()
+    @ApiProperty({required:false})
     @IsOptional()
     type: string;
 

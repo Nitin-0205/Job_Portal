@@ -10,6 +10,8 @@ import { JobsFilterDto } from './dto/jobs-Filter.dto';
 import { ApplicantEntity } from 'src/entities/Applicant.entity';
 import { UserEntity } from 'src/entities/User.entity';
 import {ApplicantService} from 'src/applicant/applicant.service';
+import { parse } from 'path';
+import { off } from 'process';
 @Injectable()
 export class JobService {
   constructor(
@@ -98,14 +100,26 @@ export class JobService {
 
   async findJobs(jobsFilterDto:JobsFilterDto) {
     const jobs = await this.jobRepo.find()
+    const offset = jobsFilterDto.offset ? Number(jobsFilterDto.offset): 0;
+    const limit = jobsFilterDto.limit ? Number(jobsFilterDto.limit)+offset : 10;
+
+    console.log(jobsFilterDto)
+
+
     if(!jobs){
       throw new HttpException("No Job Found !!!",HttpStatus.NOT_FOUND)
     }
-    if(Object.keys(jobsFilterDto).length === 0 ||(jobsFilterDto.jobtitle == undefined && jobsFilterDto.location == undefined && jobsFilterDto.type == undefined && jobsFilterDto.company == undefined && jobsFilterDto.salary == undefined) 
-    || (jobsFilterDto.jobtitle == "" && jobsFilterDto.location == "" && jobsFilterDto.type == "" && jobsFilterDto.company == "" && jobsFilterDto.salary == 0)){
-      return jobs;
-    }
 
+    if(Object.keys(jobsFilterDto).length === 0 ||(jobsFilterDto.jobId == undefined &&  jobsFilterDto.jobtitle == undefined && jobsFilterDto.location == undefined && jobsFilterDto.type == undefined && jobsFilterDto.company == undefined && jobsFilterDto.salary == undefined) 
+    || (jobsFilterDto.jobId == "" && jobsFilterDto.jobtitle == "" && jobsFilterDto.location == "" && jobsFilterDto.type == "" && jobsFilterDto.company == "" && jobsFilterDto.salary == 0)){
+      return jobs.slice(offset,limit);
+    }
+    if(jobsFilterDto.jobId){
+        const jobbyid = jobs.filter((job)=>{
+          return job.jobId == jobsFilterDto.jobId
+        })
+        return jobbyid.slice(offset,limit);
+      }
     const upd = jobs.filter((job)=>{
       if(jobsFilterDto.jobtitle){
         return job.jobtitle.toLowerCase().includes(jobsFilterDto.jobtitle.toLowerCase())
@@ -124,6 +138,7 @@ export class JobService {
       }
     })
     
+
     const jobpayload = upd.map((job)=>{
       return {
         jobId:job.jobId,
@@ -139,7 +154,8 @@ export class JobService {
     if(jobpayload.length == 0){
       throw new HttpException("No Job Found !!!",HttpStatus.NOT_FOUND)
     }
-    return jobpayload;
+
+    return jobpayload.slice(offset,limit);
   }
 
   async update(jobid: string, updateJobDto: UpdateJobDto) {

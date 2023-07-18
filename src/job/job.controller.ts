@@ -47,7 +47,7 @@ export class JobController {
   @UseGuards(JwtGuard)
   @Get("findJobsById/:JobId")
   findJobsById(@Param("JobId")JobId:string) {
-    return this.jobService.findJobsById(JobId);
+    return this.jobService.findJobsById(JobId); 
   }
 
   @ApiTags("Applicant Profile")
