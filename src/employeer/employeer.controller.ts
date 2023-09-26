@@ -12,7 +12,8 @@ import { JwtGuard } from 'src/jwt/guards/jwt.guard'
 export class EmployeerController {
   constructor(private readonly employeerService: EmployeerService,
     // private configService: ConfigService,
-    ) {}
+  ) { }
+
 
   // @ApiTags("Emplyeer Signup/Login")
   // @Post("signup")
@@ -29,15 +30,15 @@ export class EmployeerController {
 
   @ApiTags("Emplyeer Profile")
   @Get("getEmployeerProfile:employerId")
-  profile(@Param("employerId") employerId:string) {
+  profile(@Param("employerId") employerId: string) {
     return this.employeerService.employeerProfile(employerId);
   }
 
   @ApiTags("Emplyeer Profile")
   @Patch("updateEmployeerProfile/:employerId")
-  update(@Param("employerId") employerId:string,@Body() updateEmployeerDto: UpdateEmployeerDto) {
+  update(@Param("employerId") employerId: string, @Body() updateEmployeerDto: UpdateEmployeerDto) {
 
-    return this.employeerService.updateEmployeerProfile(updateEmployeerDto,employerId);
+    return this.employeerService.updateEmployeerProfile(updateEmployeerDto, employerId);
   }
 
 }
