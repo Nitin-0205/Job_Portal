@@ -214,8 +214,7 @@ export class JobService {
     console.log(job)
     if(job.applicant.length != 0){
       const check = job.applicant.find((app)=>{
-        return app.applicantId == applicantId
-      })
+        return app.applicantId == applicantId     })
       if(check){
         throw new HttpException("Already Applied !!!",HttpStatus.BAD_REQUEST)
       }

@@ -4,7 +4,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { ApiTags } from '@nestjs/swagger';
 import { LoginUserDto } from './dto/login-user.dto';
-import { RolePipe } from 'src/pipe/customRole.pipe';
+import { RolePipe } from '../pipe/customRole.pipe';
 import { UserEntity } from 'src/entities/User.entity';
 
 @ApiTags("User")

@@ -11,22 +11,6 @@ export class EmployerEntity extends BaseEntity{
     @Column("varchar", { name: "employerId",unique:true}) 
     employerId :string;
 
-    // @Column("varchar", { name: "name"})
-    // name: string;
-
-    // @Column("varchar", { name: "email"})
-    // email: string;
-
-    // @Exclude()
-    // @Column("varchar", { name: "password" })
-    // password: string;
-
-    // @Column("varchar", { name: "phone" })
-    // phone: string;
-
-    // @Column("varchar", { name: "address" })
-    // address: string;
-
     @Column("varchar", { name: "company",nullable:true})
     company: string;
 

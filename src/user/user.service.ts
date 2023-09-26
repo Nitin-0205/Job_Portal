@@ -3,14 +3,14 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import * as bycrpt from 'bcrypt';
 import { v4 as uuidv4 } from 'uuid';
-import { UserEntity } from 'src/entities/User.entity';
-import { EmployerEntity } from 'src/entities/Employer.entity';
+import { UserEntity } from '../entities/User.entity';
+import { EmployerEntity } from '../entities/Employer.entity';
 import { CreateEmployeerDto } from 'src/employeer/dto/create-employeer.dto';
 import { Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { InjectRepository } from '@nestjs/typeorm';
 import { LoginUserDto } from './dto/login-user.dto';
-import { ApplicantEntity } from 'src/entities/Applicant.entity';
+import { ApplicantEntity } from '../entities/Applicant.entity';
 import { ConfigService } from '@nestjs/config';
 
 
